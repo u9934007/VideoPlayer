@@ -76,6 +76,8 @@ class MainViewController: UIViewController {
 
         setUpAVPlayerLayerConstraints()
 
+        setUpButtonViewConstraints()
+
     }
 
     // MARK: SetUp
@@ -216,7 +218,7 @@ class MainViewController: UIViewController {
                              topConstraint,
                              widthConstraint,
                              heightConstraint
-            ])
+                            ])
 
     }
 
@@ -251,13 +253,57 @@ class MainViewController: UIViewController {
         let bottomConstraint = NSLayoutConstraint(item: aVPlayerView,
                                                   attribute: NSLayoutAttribute.bottom,
                                                   relatedBy: NSLayoutRelation.equal,
+                                                  toItem: buttonView,
+                                                  attribute: NSLayoutAttribute.top,
+                                                  multiplier: 1,
+                                                  constant: 0)
+
+        view.addConstraints([horizontalConstraint,
+                             topConstraint,
+                             widthConstraint,
+                             bottomConstraint
+                            ])
+
+    }
+
+    func setUpButtonViewConstraints() {
+
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+
+        let horizontalConstraint = NSLayoutConstraint(item: buttonView,
+                                                      attribute: NSLayoutAttribute.centerX,
+                                                      relatedBy: NSLayoutRelation.equal,
+                                                      toItem: view,
+                                                      attribute: NSLayoutAttribute.centerX,
+                                                      multiplier: 1,
+                                                      constant: 0)
+
+        let heightConstraint = NSLayoutConstraint(item: buttonView,
+                                                  attribute: NSLayoutAttribute.height,
+                                                  relatedBy: NSLayoutRelation.equal,
+                                                  toItem: nil,
+                                                  attribute: NSLayoutAttribute.notAnAttribute,
+                                                  multiplier: 1,
+                                                  constant: 44.0)
+
+        let widthConstraint = NSLayoutConstraint(item: buttonView,
+                                                 attribute: NSLayoutAttribute.width,
+                                                 relatedBy: NSLayoutRelation.equal,
+                                                 toItem: nil,
+                                                 attribute: NSLayoutAttribute.notAnAttribute,
+                                                 multiplier: 1,
+                                                 constant: view.bounds.width)
+
+        let bottomConstraint = NSLayoutConstraint(item: buttonView,
+                                                  attribute: NSLayoutAttribute.bottom,
+                                                  relatedBy: NSLayoutRelation.equal,
                                                   toItem: view,
                                                   attribute: NSLayoutAttribute.bottom,
                                                   multiplier: 1,
                                                   constant: 0)
 
         view.addConstraints([horizontalConstraint,
-                             topConstraint,
+                             heightConstraint,
                              widthConstraint,
                              bottomConstraint
             ])
