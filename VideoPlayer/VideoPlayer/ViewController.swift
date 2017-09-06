@@ -9,6 +9,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    var playerLayer: AVPlayerLayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,4 +18,5 @@ class MainViewController: UIViewController {
         view.backgroundColor = UIColor.red
 
     }
+
 }
