@@ -174,6 +174,8 @@ class MainViewController: UIViewController {
 
     }
 
+    // MARK: SetUpConstraints
+
     func setUpSearchBarViewConstraints() {
 
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -308,11 +310,13 @@ class MainViewController: UIViewController {
         if aVPlayer.isMuted {
 
             aVPlayer.isMuted = false
+
             muteButton.setTitle("Mute", for: .normal)
 
         } else {
 
             aVPlayer.isMuted = true
+
             muteButton.setTitle("Unmute", for: .normal)
 
         }
