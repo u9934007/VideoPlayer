@@ -158,90 +158,38 @@ class MainViewController: UIViewController {
 
     func setUpSearchBarViewConstraints() {
 
-        let horizontalConstraint = NSLayoutConstraint(item: searchBarView,
-                                                      attribute: NSLayoutAttribute.centerX,
-                                                      relatedBy: NSLayoutRelation.equal,
-                                                      toItem: view,
-                                                      attribute: NSLayoutAttribute.centerX,
-                                                      multiplier: 1,
-                                                      constant: 0)
-
-        let topConstraint = NSLayoutConstraint(item: searchBarView,
-                                                    attribute: NSLayoutAttribute.top,
-                                                    relatedBy: NSLayoutRelation.equal,
-                                                    toItem: view,
-                                                    attribute: NSLayoutAttribute.top,
-                                                    multiplier: 1,
-                                                    constant: 20)
-
-        let widthConstraint = NSLayoutConstraint(item: searchBarView,
-                                                 attribute: NSLayoutAttribute.width,
-                                                 relatedBy: NSLayoutRelation.equal,
-                                                 toItem: nil,
-                                                 attribute: NSLayoutAttribute.notAnAttribute,
-                                                 multiplier: 1,
-                                                 constant: view.bounds.width)
-
-        let heightConstraint = NSLayoutConstraint(item: searchBarView,
-                                                  attribute: NSLayoutAttribute.height,
-                                                  relatedBy: NSLayoutRelation.equal,
-                                                  toItem: nil,
-                                                  attribute: NSLayoutAttribute.notAnAttribute,
-                                                  multiplier: 1,
-                                                  constant: 44.0)
-
-        view.addConstraints([horizontalConstraint,
-                             topConstraint,
-                             widthConstraint,
-                             heightConstraint
-                            ])
-
     }
 
     func setUpAVPlayerLayerConstraints() {
 
-        let horizontalConstraint = NSLayoutConstraint(item: aVPlayerView,
-                                                      attribute: NSLayoutAttribute.centerX,
-                                                      relatedBy: NSLayoutRelation.equal,
-                                                      toItem: view,
-                                                      attribute: NSLayoutAttribute.centerX,
-                                                      multiplier: 1,
-                                                      constant: 0)
-
-        let topConstraint = NSLayoutConstraint(item: aVPlayerView,
-                                               attribute: NSLayoutAttribute.top,
-                                               relatedBy: NSLayoutRelation.equal,
-                                               toItem: searchBarView,
-                                               attribute: NSLayoutAttribute.bottom,
-                                               multiplier: 1,
-                                               constant: 0)
-
-        let widthConstraint = NSLayoutConstraint(item: aVPlayerView,
-                                                 attribute: NSLayoutAttribute.width,
-                                                 relatedBy: NSLayoutRelation.equal,
-                                                 toItem: nil,
-                                                 attribute: NSLayoutAttribute.notAnAttribute,
-                                                 multiplier: 1,
-                                                 constant: view.bounds.width)
-
-        let bottomConstraint = NSLayoutConstraint(item: aVPlayerView,
-                                               attribute: NSLayoutAttribute.bottom,
-                                               relatedBy: NSLayoutRelation.equal,
-                                               toItem: view,
-                                               attribute: NSLayoutAttribute.bottom,
-                                               multiplier: 1,
-                                               constant: 0)
-
-        view.addConstraints([horizontalConstraint,
-                             topConstraint,
-                             widthConstraint,
-                             bottomConstraint
-                            ])
-
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        print("obsrved")
+
+        if keyPath == "status" {
+
+            guard let player = object as? AVPlayer else {
+                return
+            }
+
+            switch  player.volume {
+
+            case 0:
+                muteButton.setTitle("Unmute", for: .normal)
+            default:
+                muteButton.setTitle("Mute", for: .normal)
+
+            }
+
+            switch player.rate {
+            case 0.0 :
+                playButton.setTitle("Play", for: .normal)
+            default:
+                playButton.setTitle("Pause", for: .normal)
+            }
+
+        }
+
     }
 
 }
