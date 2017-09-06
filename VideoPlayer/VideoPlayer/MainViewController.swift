@@ -54,9 +54,9 @@ class MainViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-//        setUpSearchBarViewConstraints()
-//
-//        setUpAVPlayerLayerConstraints()
+        setUpSearchBarViewConstraints()
+
+        setUpAVPlayerLayerConstraints()
 
     }
 
@@ -69,12 +69,6 @@ class MainViewController: UIViewController {
         searchBarView.frame = CGRect(x: 0.0, y: 20.0, width: view.bounds.width, height: 44.0)
 
         view.addSubview(searchBarView)
-
-        self.addChildViewController(aVPlayerViewController)
-
-        aVPlayerViewController.view.frame = searchBarView.frame
-
-        self.aVPlayerView.addSubview(aVPlayerViewController.view)
 
     }
 
@@ -97,6 +91,12 @@ class MainViewController: UIViewController {
         aVPlayerView.frame = CGRect(x: 0.0, y: 64.0, width: view.bounds.width, height: 603.0)
 
         view.addSubview(aVPlayerView)
+        
+        self.addChildViewController(aVPlayerViewController)
+        
+        aVPlayerViewController.view.frame = searchBarView.frame
+        
+        self.aVPlayerView.addSubview(aVPlayerViewController.view)
 
     }
 
