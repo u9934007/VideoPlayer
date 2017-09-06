@@ -104,6 +104,8 @@ class MainViewController: UIViewController {
 
         searchController.searchBar.searchBarStyle = .prominent
 
+        searchController.dimsBackgroundDuringPresentation = false
+
     }
 
     func setUpAVPlayer() {
@@ -123,7 +125,6 @@ class MainViewController: UIViewController {
         aVPlayerView.addSubview(aVPlayerViewController.view)
 
         aVPlayer.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions(), context: nil)
-        aVPlayer.addObserver(self, forKeyPath: "isMuted", options: NSKeyValueObservingOptions(), context: nil)
 
     }
 
@@ -202,18 +203,6 @@ class MainViewController: UIViewController {
 
             }
 
-        } else if keyPath == "isMuted" {
-
-            switch player.isMuted {
-
-            case true:
-                muteButton.setTitle("Unmute", for: .normal)
-
-            default:
-                muteButton.setTitle("Mute", for: .normal)
-
-            }
-
         }
 
     }
@@ -239,14 +228,17 @@ class MainViewController: UIViewController {
         if aVPlayer.isMuted {
 
             aVPlayer.isMuted = false
+            muteButton.setTitle("Mute", for: .normal)
 
         } else {
 
             aVPlayer.isMuted = true
+            muteButton.setTitle("Unmute", for: .normal)
 
         }
 
     }
+
 }
 
 // MARK: UISearchResultsUpdating
@@ -262,15 +254,11 @@ extension MainViewController: UISearchResultsUpdating {
 
         aVPlayer.removeObserver(self, forKeyPath: "rate")
 
-        aVPlayer.removeObserver(self, forKeyPath: "isMuted")
-
         aVPlayer = AVPlayer(url: searchURL)
 
         aVPlayerViewController.player = aVPlayer
 
         aVPlayer.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions(), context: nil)
-
-        aVPlayer.addObserver(self, forKeyPath: "isMuted", options: NSKeyValueObservingOptions(), context: nil)
 
         aVPlayer.play()
 
