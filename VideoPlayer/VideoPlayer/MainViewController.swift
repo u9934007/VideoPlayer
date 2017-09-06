@@ -30,6 +30,8 @@ class MainViewController: UIViewController {
 
     let buttonView = UIView()
 
+    var isPlaying = false
+
     // MARK: Init
 
     init() {
@@ -41,7 +43,9 @@ class MainViewController: UIViewController {
     }
 
     required init?(coder aDecoder: NSCoder) {
+
         fatalError("init(coder:) has not been implemented")
+
     }
 
     // MARK: viewDidLoad
@@ -73,6 +77,8 @@ class MainViewController: UIViewController {
         setUpAVPlayerLayerConstraints()
 
     }
+
+    // MARK: SetUp
 
     func setUpSearchBarView() {
 
@@ -116,7 +122,8 @@ class MainViewController: UIViewController {
 
         aVPlayerView.addSubview(aVPlayerViewController.view)
 
-        aVPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(), context: nil)
+        aVPlayer.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions(), context: nil)
+        aVPlayer.addObserver(self, forKeyPath: "isMuted", options: NSKeyValueObservingOptions(), context: nil)
 
     }
 
@@ -138,6 +145,11 @@ class MainViewController: UIViewController {
 
         playButton.setTitleColor(UIColor.white, for: .normal)
 
+        playButton.addTarget(
+            self,
+            action: #selector(playAndPause),
+            for: .touchUpInside)
+
         buttonView.addSubview(playButton)
 
     }
@@ -152,6 +164,11 @@ class MainViewController: UIViewController {
 
         muteButton.setTitleColor(UIColor.white, for: .normal)
 
+        muteButton.addTarget(
+            self,
+            action: #selector(muteAndUnmute),
+            for: .touchUpInside)
+
         buttonView.addSubview(muteButton)
 
     }
@@ -164,34 +181,72 @@ class MainViewController: UIViewController {
 
     }
 
+    // MARK: observeValue
+
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 
-        if keyPath == "status" {
+        guard let player = object as? AVPlayer
+            else { return }
 
-            guard let player = object as? AVPlayer else {
-                return
+        if keyPath == "rate" {
+
+            switch player.rate {
+
+            case 0.0 :
+                isPlaying = false
+                playButton.setTitle("Play", for: .normal)
+
+            default:
+                isPlaying = true
+                playButton.setTitle("Pause", for: .normal)
+
             }
 
-            switch  player.volume {
+        } else if keyPath == "isMuted" {
 
-            case 0:
+            switch player.isMuted {
+
+            case true:
                 muteButton.setTitle("Unmute", for: .normal)
+
             default:
                 muteButton.setTitle("Mute", for: .normal)
 
-            }
-
-            switch player.rate {
-            case 0.0 :
-                playButton.setTitle("Play", for: .normal)
-            default:
-                playButton.setTitle("Pause", for: .normal)
             }
 
         }
 
     }
 
+    // MARK: Button Action
+
+    func playAndPause() {
+
+        if isPlaying {
+
+            aVPlayer.pause()
+
+        } else {
+
+            aVPlayer.play()
+
+        }
+
+    }
+
+    func muteAndUnmute() {
+
+        if aVPlayer.isMuted {
+
+            aVPlayer.isMuted = false
+
+        } else {
+
+            aVPlayer.isMuted = true
+
+        }
+
+    }
 }
 
 // MARK: UISearchResultsUpdating
@@ -205,13 +260,17 @@ extension MainViewController: UISearchResultsUpdating {
             let searchURL = URL(string: searchText)
             else { return }
 
-        aVPlayer.removeObserver(self, forKeyPath: "status")
+        aVPlayer.removeObserver(self, forKeyPath: "rate")
+
+        aVPlayer.removeObserver(self, forKeyPath: "isMuted")
 
         aVPlayer = AVPlayer(url: searchURL)
 
         aVPlayerViewController.player = aVPlayer
 
-        aVPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(), context: nil)
+        aVPlayer.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions(), context: nil)
+
+        aVPlayer.addObserver(self, forKeyPath: "isMuted", options: NSKeyValueObservingOptions(), context: nil)
 
         aVPlayer.play()
 
