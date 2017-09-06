@@ -14,13 +14,13 @@ class MainViewController: UIViewController {
 
     // MARK: Property
 
-    var aVPlayerView =  UIView()
+    var aVPlayerView = UIView()
 
     var aVPlayer = AVPlayer()
 
     let aVPlayerViewController = AVPlayerViewController()
 
-    var searchBarView =  UIView()
+    var searchBarView = UIView()
 
     let searchController: UISearchController
 
