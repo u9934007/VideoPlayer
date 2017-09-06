@@ -24,6 +24,12 @@ class MainViewController: UIViewController {
 
     let searchController: UISearchController
 
+    let playButton = UIButton()
+
+    let muteButton = UIButton()
+
+    let buttonView = UIView()
+
     // MARK: Init
 
     init() {
@@ -38,10 +44,12 @@ class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Viewdidload
+    // MARK: viewDidLoad
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.backgroundColor = UIColor.white
 
         setUpSearchBarView()
 
@@ -49,7 +57,15 @@ class MainViewController: UIViewController {
 
         setUpAVPlayer()
 
+        setUpButtonView()
+
+        setUpPlayButton()
+
+        setUpMuteButton()
+
     }
+
+    // MARK: viewWillLayoutSubviews
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -88,15 +104,47 @@ class MainViewController: UIViewController {
 
     func setUpAVPlayer() {
 
+        aVPlayerView.backgroundColor = UIColor.blue
+
         aVPlayerView.frame = CGRect(x: 0.0, y: 64.0, width: view.bounds.width, height: 603.0)
 
         view.addSubview(aVPlayerView)
-        
-        self.addChildViewController(aVPlayerViewController)
-        
+
+        addChildViewController(aVPlayerViewController)
+
         aVPlayerViewController.view.frame = searchBarView.frame
-        
-        self.aVPlayerView.addSubview(aVPlayerViewController.view)
+
+        aVPlayerView.addSubview(aVPlayerViewController.view)
+
+        aVPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(), context: nil)
+
+    }
+
+    func setUpButtonView() {
+
+        buttonView.frame = CGRect(x: 0.0, y: view.bounds.height - 44.0, width:  view.bounds.width, height: 44.0)
+
+        view.addSubview(buttonView)
+
+    }
+
+    func setUpPlayButton() {
+
+        playButton.frame = CGRect(x: 20.0, y: buttonView.frame.height/2, width: 33.0, height: 19.0)
+
+        playButton.setTitle("Play", for: .normal)
+
+        buttonView.addSubview(playButton)
+
+    }
+
+    func setUpMuteButton() {
+
+        muteButton.frame = CGRect(x: view.bounds.width - 55.0, y:  buttonView.frame.height/2, width: 33.0, height: 19.0)
+
+        muteButton.setTitle("Mute", for: .normal)
+
+        buttonView.addSubview(muteButton)
 
     }
 
@@ -184,6 +232,10 @@ class MainViewController: UIViewController {
 
     }
 
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("obsrved")
+    }
+
 }
 
 // MARK: UISearchResultsUpdating
@@ -197,9 +249,13 @@ extension MainViewController: UISearchResultsUpdating {
             let searchURL = URL(string: searchText)
             else { return }
 
+        aVPlayer.removeObserver(self, forKeyPath: "status")
+
         aVPlayer = AVPlayer(url: searchURL)
 
         aVPlayerViewController.player = aVPlayer
+
+        aVPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(), context: nil)
 
         aVPlayer.play()
 
