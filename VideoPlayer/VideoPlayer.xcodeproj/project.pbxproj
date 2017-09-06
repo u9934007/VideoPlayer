@@ -310,6 +310,7 @@
 				B2C527361F5FC3D700B9F309 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
