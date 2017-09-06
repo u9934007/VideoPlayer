@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B259E9691F5FE8EC007D8461 /* CustomAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259E9681F5FE8EC007D8461 /* CustomAVPlayerViewController.swift */; };
 		B2C527261F5FC3D700B9F309 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C527251F5FC3D700B9F309 /* AppDelegate.swift */; };
 		B2C527281F5FC3D700B9F309 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C527271F5FC3D700B9F309 /* MainViewController.swift */; };
 		B2C5272D1F5FC3D700B9F309 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C5272C1F5FC3D700B9F309 /* Assets.xcassets */; };
@@ -15,7 +14,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B259E9681F5FE8EC007D8461 /* CustomAVPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAVPlayerViewController.swift; sourceTree = "<group>"; };
 		B2C527221F5FC3D700B9F309 /* VideoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2C527251F5FC3D700B9F309 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2C527271F5FC3D700B9F309 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +54,6 @@
 			children = (
 				B2C527251F5FC3D700B9F309 /* AppDelegate.swift */,
 				B2C527271F5FC3D700B9F309 /* MainViewController.swift */,
-				B259E9681F5FE8EC007D8461 /* CustomAVPlayerViewController.swift */,
 				B2C5272C1F5FC3D700B9F309 /* Assets.xcassets */,
 				B2C5272E1F5FC3D700B9F309 /* LaunchScreen.storyboard */,
 				B2C527311F5FC3D700B9F309 /* Info.plist */,
@@ -155,7 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C527281F5FC3D700B9F309 /* MainViewController.swift in Sources */,
-				B259E9691F5FE8EC007D8461 /* CustomAVPlayerViewController.swift in Sources */,
 				B2C527261F5FC3D700B9F309 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
